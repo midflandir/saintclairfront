@@ -1,4 +1,4 @@
-import { getAllSpecialtypatient, postSpecialty/* postNote, deleteNote, putNote*/} from "./action/action.js";
+import { getAllSpecialtypatient, postSpecialty, deleteSpecialty, deletePatient} from "./action/action.js";
 import { specialtyI,patientI} from "./model/interface.js";
 const form: HTMLFormElement |null =
 document.querySelector('.specialties-form');
@@ -69,8 +69,9 @@ function createSpecialty(specialty:specialtyI){
   const specialtyContainer = document.querySelector('.medicalspecialtylist-container') as HTMLDivElement
 
   const div:HTMLDivElement = document.createElement('div');
-  div.className = 'single-specialty-container grid-container'
-  div.classList.add(`specialty-${specialty.id}`)
+  div.className = `specialty-${specialty.id}`
+  div.classList.add(`single-specialty-container` )
+  div.classList.add(`grid-container`)
 
   const h2:HTMLHeadElement = document.createElement('h2');
   h2.className = `single-specialty-name-${specialty.id}`
@@ -83,7 +84,7 @@ function createSpecialty(specialty:specialtyI){
   const deleteButton:HTMLButtonElement = document.createElement('button')
   deleteButton.className = 'single-specialty-delete-button'
   deleteButton.innerText = 'Delete Specialty'
-  //deleteButton.addEventListener('click', ()=> handleDelete(div))
+  deleteButton.addEventListener('click', ()=> handleDeleteSpecialty(div))
 
   const editButton:HTMLButtonElement = document.createElement('button')
   editButton.className = 'single-specialty-edit-button'
@@ -93,43 +94,131 @@ function createSpecialty(specialty:specialtyI){
  const insertpatientButton:HTMLButtonElement = document.createElement('button')
  insertpatientButton.className = 'add-patient-button'
  insertpatientButton.innerText = 'Add patient'
-// insertpatientButton.addEventListener('click', ()=> hanldeEdit(note))
+ insertpatientButton.addEventListener('click', ()=> hanldeAddpatient(specialty, div))
 
   div.append(h2, reminderP, deleteButton, editButton, insertpatientButton)
   specialtyContainer.append(div)
 
   if( specialty.patients?.length && specialty?.id){
-    insertpatients(specialty.patients, specialty.id, div)
+    insertpatients(specialty.patients, div)
    }
 
 }
 
-function insertpatients(patients:patientI[], specialtyid:number, specialtyContainer:HTMLDivElement){
-    patients.forEach(patient => insertsinglepatient(patient, specialtyid, specialtyContainer))
+
+function hanldeAddpatient(specialty:specialtyI, div:HTMLDivElement){
+
+    const formpatient:HTMLFormElement = document.createElement('form');
+    formpatient.className = `patientform-${specialty.id}`
+
+    const submitButtonadd = document.querySelectorAll('.add-patient-button')
+    submitButtonadd.forEach(button => (button.classList.add('display_none')))
+
+    const inputname:HTMLInputElement = document.createElement('input');
+    inputname.className = `inputpatientname-${specialty.id}`
+    inputname.placeholder = "Patient name"
+
+    const inputage:HTMLInputElement = document.createElement('input');
+    inputage.className = `inputpatientage-${specialty.id}`
+    inputage.placeholder = "Patient age"
+
+    const inputIdnumber:HTMLInputElement = document.createElement('input');
+    inputIdnumber.className = `inputpatientidnumber-${specialty.id}`
+    inputIdnumber.placeholder = "Patient Identification Number"
+
+
+
+    const submitButton:HTMLButtonElement = document.createElement('button');
+    submitButton.className = 'single-specialty-delete-button'
+    submitButton.innerText = 'Submit'
+    submitButton.addEventListener('click', ()=> handleDeleteSpecialty(div))
+
+    formpatient.append(inputname, inputage, inputIdnumber, document.createElement('br'), submitButton)
+    formpatient?.addEventListener('submit', (e) => handlepatientSubmit(e, specialty, div, formpatient))
+    div.append(formpatient)
+
+  }
+
+
+
+  function handlepatientSubmit(e:SubmitEvent, specialty:specialtyI,
+    div:HTMLDivElement, formpatient:HTMLFormElement){
+
+
+
+
+
+e.preventDefault()
+  const nameinput = document.querySelector('.name-input') as HTMLInputElement;
+
+  const physicianInput = document.querySelector('.physician-input') as HTMLInputElement;
+
+  if(nameinput.value.length >= 5 && nameinput.value.length <=100
+    && physicianInput.value.length >= 10 && physicianInput.value.length <= 45 ){
+
+    const date = new Date()
+    date.setHours(date.getHours() - 5)
+
+
+
+    const newspecialty: specialtyI = {
+      id: null,
+      name: nameinput.value,
+      physicianInCharge: physicianInput.value,
+      patients: []
+
+    }
+
+    postSpecialty(newspecialty).then(
+      response => {
+        if(response.status === 200){
+          state.push(newspecialty)
+
+          createSpecialty(newspecialty);
+          nameinput.value = '';
+          physicianInput.value = '';
+        }
+      }
+    )
+  }
+  }
+
+
+
+
+
+
+
+
+
+
+
+function insertpatients(patients:patientI[], specialtyContainer:HTMLDivElement){
+    patients.forEach(patient => insertsinglepatient(patient, specialtyContainer))
 }
 
 
-function insertsinglepatient(patient:patientI, specialtyid:number, specialtyContainer:HTMLDivElement){
+function insertsinglepatient(patient:patientI, specialtyContainer:HTMLDivElement){
 
 
     const div:HTMLDivElement = document.createElement('div');
-    div.className = 'single-patient-container'
-    div.classList.add(`specialty-${specialtyid}`)
+    div.className = `patient-${patient.id}`
+    div.classList.add('single-patient-container')
 
     const name:HTMLHeadElement = document.createElement('p');
-    name.className = `single-patient-name-${specialtyid}`
+    name.className = `single-patient-name-${patient.id}`
     name.innerText = 'Patient name: ' + patient.name
 
     const agep:HTMLHeadElement = document.createElement('p');
-    agep.className = `single-patient-name-${specialtyid}`
+    agep.className = `single-patient-name-${patient.id}`
     agep.innerText = 'Age: ' + patient.age
 
     const numberApointments:HTMLHeadElement = document.createElement('p');
-    agep.className = `single-patient-name-${specialtyid}`
+    agep.className = `single-patient-name-${patient.id}`
     agep.innerText = 'Number of Apointments: ' + patient.numberOfApointments
 
     const pidentificantion:HTMLHeadElement = document.createElement('p');
-    pidentificantion.className = `single-patient-name-${specialtyid}`
+    pidentificantion.className = `single-patient-name-${patient.id}`
     pidentificantion.innerText = 'Identification Number: ' + patient.identificationNumber
 
 
@@ -138,7 +227,7 @@ function insertsinglepatient(patient:patientI, specialtyid:number, specialtyCont
     const deleteButton:HTMLButtonElement = document.createElement('button')
     deleteButton.className = 'single-patient-delete-button'
     deleteButton.innerText = 'Delete patient'
-    //deleteButton.addEventListener('click', ()=> handleDelete(div))
+    deleteButton.addEventListener('click', ()=> handleDeletePatient(div))
 
     const eadddateButton:HTMLButtonElement = document.createElement('button')
     eadddateButton.className = 'single-patient-add-date-button'
@@ -162,4 +251,28 @@ function recreatedates(date:string, div:HTMLDivElement){
     div.append(datep)
 
 }
+
+function handleDeleteSpecialty(div:HTMLDivElement){
+    const id:string = div.classList[0].split('-')[1]
+
+    deleteSpecialty(id).then(response => {
+      if(response.status === 200){
+        div.remove()
+        const newSate = state.filter(specialty => specialty.id !== parseInt(id))
+        state = newSate
+      }
+    })
+  }
+
+  function handleDeletePatient(div:HTMLDivElement){
+    const id:string = div.classList[0].split('-')[1]
+
+    deletePatient(id).then(response => {
+      if(response.status === 200){
+        div.remove()
+        const newSate = state.filter(specialty => specialty.id !== parseInt(id))
+        state = newSate
+      }
+    })
+  }
 

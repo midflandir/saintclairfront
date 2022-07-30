@@ -33,6 +33,9 @@ background-color: #068D9D;
     border-radius: 5rem;
 
 }
+.display_none{
+    display: none;
+}
 
 p{
     font-size: 1.2em
