@@ -33,6 +33,7 @@ background-color: #068D9D;
     border-radius: 5rem;
 
 }
+
 p{
     font-size: 1.2em
 }
@@ -46,7 +47,23 @@ p{
     border-radius: 1rem;
 background-color: #068D9D;
 
+
   }
+button{
+    font-size: 1em;
+    padding: 5px;
+    margin: 10px;
+    color: #293635;
+
+}
+
+input{
+    font-size: 1em;
+    padding: 5px;
+    margin: 10px;
+    color: #293635;
+    border-radius: 1rem;
+}
 
   .medicalspecialtylist-container{
 

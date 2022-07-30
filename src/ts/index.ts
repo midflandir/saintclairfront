@@ -1,4 +1,4 @@
-import { getAllSpecialtypatient,/* postNote, deleteNote, putNote*/} from "./action/action.js";
+import { getAllSpecialtypatient, postSpecialty/* postNote, deleteNote, putNote*/} from "./action/action.js";
 import { specialtyI,patientI} from "./model/interface.js";
 const form: HTMLFormElement |null =
 document.querySelector('.specialties-form');
@@ -26,40 +26,46 @@ getAllSpecialtypatient().then(specialties => {
 })
 
 let state:specialtyI[] = []
-/*
+
 form?.addEventListener('submit', (e) => handleSubmit(e))
 
 function handleSubmit(e:SubmitEvent){
   e.preventDefault()
   const nameinput = document.querySelector('.name-input') as HTMLInputElement;
+
   const physicianInput = document.querySelector('.physician-input') as HTMLInputElement;
-  if(nameinput.value&&physicianInput.value){
+
+  if(nameinput.value.length >= 5 && nameinput.value.length <=100
+    && physicianInput.value.length >= 10 && physicianInput.value.length <= 45 ){
+
     const date = new Date()
     date.setHours(date.getHours() - 5)
 
-    const newNote: noteI = {
+
+
+    const newspecialty: specialtyI = {
       id: null,
       name: nameinput.value,
       physicianInCharge: physicianInput.value,
-      patients:null
+      patients: []
 
     }
 
-    postNote(newNote).then(
+    postSpecialty(newspecialty).then(
       response => {
         if(response.status === 200){
-          state.push(newNote)
+          state.push(newspecialty)
 
-          createReminder(newNote);
+          createSpecialty(newspecialty);
           nameinput.value = '';
           physicianInput.value = '';
         }
       }
     )
   }
-}*/
+}
 
-function createReminder(specialty:specialtyI){
+function createSpecialty(specialty:specialtyI){
   const specialtyContainer = document.querySelector('.medicalspecialtylist-container') as HTMLDivElement
 
   const div:HTMLDivElement = document.createElement('div');
@@ -86,19 +92,17 @@ function createReminder(specialty:specialtyI){
 
  const insertpatientButton:HTMLButtonElement = document.createElement('button')
  insertpatientButton.className = 'add-patient-button'
- insertpatientButton.innerText = 'addpatient'
-// editButton.addEventListener('click', ()=> hanldeEdit(note))
+ insertpatientButton.innerText = 'Add patient'
+// insertpatientButton.addEventListener('click', ()=> hanldeEdit(note))
 
   div.append(h2, reminderP, deleteButton, editButton, insertpatientButton)
   specialtyContainer.append(div)
-
 
   if( specialty.patients?.length && specialty?.id){
     insertpatients(specialty.patients, specialty.id, div)
    }
 
 }
-
 
 function insertpatients(patients:patientI[], specialtyid:number, specialtyContainer:HTMLDivElement){
     patients.forEach(patient => insertsinglepatient(patient, specialtyid, specialtyContainer))
@@ -146,8 +150,8 @@ function insertsinglepatient(patient:patientI, specialtyid:number, specialtyCont
 
 }
 
-function recreateSpecialy(notes:specialtyI[]){
-    notes.forEach(note => createReminder(note))
+function recreateSpecialy(specialy:specialtyI[]){
+    specialy.forEach(specialy => createSpecialty(specialy))
   }
 
 function recreatedates(date:string, div:HTMLDivElement){

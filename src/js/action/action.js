@@ -14,6 +14,18 @@ export function getAllSpecialtypatient() {
         return data;
     });
 }
+export function postSpecialty(specialty) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield fetch('http://localhost:9090/api/v1/hospital/registerspecialty', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(specialty)
+        });
+        return response;
+    });
+}
 /*
 export async function postNote(note:noteI){
   const response:Response = await fetch('http://localhost:8081/api/v1/save/note',

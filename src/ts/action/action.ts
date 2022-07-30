@@ -1,4 +1,4 @@
-import { specialtyI } from "../model/interface.js";
+import { specialtyI, patientI} from "../model/interface.js";
 
 export async function getAllSpecialtypatient() {
   const response:Response = await fetch('http://localhost:9090/api/v1/hospital/allmedicalspecialty')
@@ -7,6 +7,21 @@ export async function getAllSpecialtypatient() {
 
   return data
 }
+
+export async function postSpecialty(specialty:specialtyI){
+
+    const response:Response = await fetch('http://localhost:9090/api/v1/hospital/registerspecialty',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(specialty)
+    })
+
+    return response;
+  }
+
 /*
 export async function postNote(note:noteI){
   const response:Response = await fetch('http://localhost:8081/api/v1/save/note',

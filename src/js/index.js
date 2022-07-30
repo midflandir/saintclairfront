@@ -1,4 +1,4 @@
-import { getAllSpecialtypatient, /* postNote, deleteNote, putNote*/ } from "./action/action.js";
+import { getAllSpecialtypatient, postSpecialty /* postNote, deleteNote, putNote*/ } from "./action/action.js";
 const form = document.querySelector('.specialties-form');
 /*
 export interface specialtyI{
@@ -22,39 +22,32 @@ getAllSpecialtypatient().then(specialties => {
     recreateSpecialy(specialties);
 });
 let state = [];
-/*
-form?.addEventListener('submit', (e) => handleSubmit(e))
-
-function handleSubmit(e:SubmitEvent){
-  e.preventDefault()
-  const nameinput = document.querySelector('.name-input') as HTMLInputElement;
-  const physicianInput = document.querySelector('.physician-input') as HTMLInputElement;
-  if(nameinput.value&&physicianInput.value){
-    const date = new Date()
-    date.setHours(date.getHours() - 5)
-
-    const newNote: noteI = {
-      id: null,
-      name: nameinput.value,
-      physicianInCharge: physicianInput.value,
-      patients:null
-
+form === null || form === void 0 ? void 0 : form.addEventListener('submit', (e) => handleSubmit(e));
+function handleSubmit(e) {
+    e.preventDefault();
+    const nameinput = document.querySelector('.name-input');
+    const physicianInput = document.querySelector('.physician-input');
+    if (nameinput.value.length >= 5 && nameinput.value.length <= 100
+        && physicianInput.value.length >= 10 && physicianInput.value.length <= 45) {
+        const date = new Date();
+        date.setHours(date.getHours() - 5);
+        const newspecialty = {
+            id: null,
+            name: nameinput.value,
+            physicianInCharge: physicianInput.value,
+            patients: []
+        };
+        postSpecialty(newspecialty).then(response => {
+            if (response.status === 200) {
+                state.push(newspecialty);
+                createSpecialty(newspecialty);
+                nameinput.value = '';
+                physicianInput.value = '';
+            }
+        });
     }
-
-    postNote(newNote).then(
-      response => {
-        if(response.status === 200){
-          state.push(newNote)
-
-          createReminder(newNote);
-          nameinput.value = '';
-          physicianInput.value = '';
-        }
-      }
-    )
-  }
-}*/
-function createReminder(specialty) {
+}
+function createSpecialty(specialty) {
     var _a;
     const specialtyContainer = document.querySelector('.medicalspecialtylist-container');
     const div = document.createElement('div');
@@ -76,8 +69,8 @@ function createReminder(specialty) {
     // editButton.addEventListener('click', ()=> hanldeEdit(note))
     const insertpatientButton = document.createElement('button');
     insertpatientButton.className = 'add-patient-button';
-    insertpatientButton.innerText = 'addpatient';
-    // editButton.addEventListener('click', ()=> hanldeEdit(note))
+    insertpatientButton.innerText = 'Add patient';
+    // insertpatientButton.addEventListener('click', ()=> hanldeEdit(note))
     div.append(h2, reminderP, deleteButton, editButton, insertpatientButton);
     specialtyContainer.append(div);
     if (((_a = specialty.patients) === null || _a === void 0 ? void 0 : _a.length) && (specialty === null || specialty === void 0 ? void 0 : specialty.id)) {
@@ -115,8 +108,8 @@ function insertsinglepatient(patient, specialtyid, specialtyContainer) {
     div.append(name, pidentificantion, agep, numberApointments, eadddateButton, deleteButton);
     specialtyContainer.append(div);
 }
-function recreateSpecialy(notes) {
-    notes.forEach(note => createReminder(note));
+function recreateSpecialy(specialy) {
+    specialy.forEach(specialy => createSpecialty(specialy));
 }
 function recreatedates(date, div) {
     const datep = document.createElement('p');
