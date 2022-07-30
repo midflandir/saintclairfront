@@ -1,9 +1,9 @@
-import { noteI } from "../index.js";
+import { specialtyI } from "../model/interface.js";
 
-export async function getAllNotes() {
+export async function getAllSpecialtypatient() {
   const response:Response = await fetch('http://localhost:9090/api/v1/hospital/allmedicalspecialty')
 
-  const data:noteI[] = await response.json()
+  const data:specialtyI[] = await response.json()
 
   return data
 }

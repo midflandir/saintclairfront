@@ -1,0 +1,56 @@
+.grid-container {
+    color: #293635;
+    min-height: 12rem;
+    border-radius: 2rem;
+background-color: #80DED9;
+
+
+    padding: 30px;
+    margin: 20px;
+  }
+
+  .single-patient-container{
+    color: #defaf9;
+    box-sizing: border-box;
+    min-height: 12rem;
+    border-radius: 1rem;
+background-color: #068D9D;
+
+
+
+    padding: 20px;
+    margin: 20px;
+  }
+.top-section-container{
+    background-image: url("../images/banner6.jpg");
+    background-size: cover;
+    padding: 10px;
+    text-align: center;
+    width: 70%;
+    color: #293635;
+    margin: auto;
+    min-height: 12rem;
+    border-radius: 5rem;
+
+}
+p{
+    font-size: 1.2em
+}
+  body{
+
+    margin: auto;
+    text-align: center;
+ color: #defaf9;
+    box-sizing: border-box;
+    min-height: 30vh;
+    border-radius: 1rem;
+background-color: #068D9D;
+
+  }
+
+  .medicalspecialtylist-container{
+
+    margin: auto;
+    width: 50%;
+
+  }

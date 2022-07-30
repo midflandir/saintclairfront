@@ -1,8 +1,25 @@
-import { getAllNotes, /* postNote, deleteNote, putNote*/ } from "./action/action.js";
-const form = document.querySelector('.reminders-form');
-getAllNotes().then(notes => {
-    state = notes;
-    recreateNotes(notes);
+import { getAllSpecialtypatient, /* postNote, deleteNote, putNote*/ } from "./action/action.js";
+const form = document.querySelector('.specialties-form');
+/*
+export interface specialtyI{
+    id:number|null,
+    name:string,
+    physicianInCharge:string,
+    patients:patientI[] | null
+
+}
+export interface patientI{
+      id:number,
+      name:string,
+      age:string,
+      identificationNumber:string,
+      date:string[],
+      numberOfApointments:number
+
+}*/
+getAllSpecialtypatient().then(specialties => {
+    state = specialties;
+    recreateSpecialy(specialties);
 });
 let state = [];
 /*
@@ -37,33 +54,73 @@ function handleSubmit(e:SubmitEvent){
     )
   }
 }*/
-function createReminder(note) {
-    const notesContainer = document.querySelector('.medicalspecialtylist-container');
+function createReminder(specialty) {
+    var _a;
+    const specialtyContainer = document.querySelector('.medicalspecialtylist-container');
     const div = document.createElement('div');
-    div.className = 'single-note-container';
-    div.classList.add(`note-${note.id}`);
+    div.className = 'single-specialty-container grid-container';
+    div.classList.add(`specialty-${specialty.id}`);
     const h2 = document.createElement('h2');
-    h2.className = `single-note-name-${note.id}`;
-    h2.innerText = 'Specialty: ' + note.name;
+    h2.className = `single-specialty-name-${specialty.id}`;
+    h2.innerText = 'Specialty: ' + specialty.name;
     const reminderP = document.createElement('p');
-    reminderP.className = `single-note-reminder-${note.id}`;
-    reminderP.innerText = 'Physician In Charge: ' + note.physicianInCharge;
-    /*const dateP:HTMLParagraphElement = document.createElement('p')
-    dateP.className = `single-note-date-${note.id}`
-    dateP.innerText = note.date
-  */
-    note.patients.id;
+    reminderP.className = `single-specialty-reminder-${specialty.id}`;
+    reminderP.innerText = 'Physician In Charge: ' + specialty.physicianInCharge;
     const deleteButton = document.createElement('button');
-    deleteButton.className = 'single-note-delete-button';
-    deleteButton.innerText = 'X';
+    deleteButton.className = 'single-specialty-delete-button';
+    deleteButton.innerText = 'Delete Specialty';
     //deleteButton.addEventListener('click', ()=> handleDelete(div))
     const editButton = document.createElement('button');
-    editButton.className = 'single-note-edit-button';
-    editButton.innerText = 'edit';
+    editButton.className = 'single-specialty-edit-button';
+    editButton.innerText = 'Edit Specialty';
     // editButton.addEventListener('click', ()=> hanldeEdit(note))
-    div.append(h2, reminderP, /* dateP,*/ deleteButton, editButton);
-    notesContainer.append(div);
+    const insertpatientButton = document.createElement('button');
+    insertpatientButton.className = 'add-patient-button';
+    insertpatientButton.innerText = 'addpatient';
+    // editButton.addEventListener('click', ()=> hanldeEdit(note))
+    div.append(h2, reminderP, deleteButton, editButton, insertpatientButton);
+    specialtyContainer.append(div);
+    if (((_a = specialty.patients) === null || _a === void 0 ? void 0 : _a.length) && (specialty === null || specialty === void 0 ? void 0 : specialty.id)) {
+        insertpatients(specialty.patients, specialty.id, div);
+    }
 }
-function recreateNotes(notes) {
+function insertpatients(patients, specialtyid, specialtyContainer) {
+    patients.forEach(patient => insertsinglepatient(patient, specialtyid, specialtyContainer));
+}
+function insertsinglepatient(patient, specialtyid, specialtyContainer) {
+    const div = document.createElement('div');
+    div.className = 'single-patient-container';
+    div.classList.add(`specialty-${specialtyid}`);
+    const name = document.createElement('p');
+    name.className = `single-patient-name-${specialtyid}`;
+    name.innerText = 'Patient name: ' + patient.name;
+    const agep = document.createElement('p');
+    agep.className = `single-patient-name-${specialtyid}`;
+    agep.innerText = 'Age: ' + patient.age;
+    const numberApointments = document.createElement('p');
+    agep.className = `single-patient-name-${specialtyid}`;
+    agep.innerText = 'Number of Apointments: ' + patient.numberOfApointments;
+    const pidentificantion = document.createElement('p');
+    pidentificantion.className = `single-patient-name-${specialtyid}`;
+    pidentificantion.innerText = 'Identification Number: ' + patient.identificationNumber;
+    patient.date.forEach(date => recreatedates(date, div));
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'single-patient-delete-button';
+    deleteButton.innerText = 'Delete patient';
+    //deleteButton.addEventListener('click', ()=> handleDelete(div))
+    const eadddateButton = document.createElement('button');
+    eadddateButton.className = 'single-patient-add-date-button';
+    eadddateButton.innerText = 'add date';
+    // editButton.addEventListener('click', ()=> hanldeEdit(note))
+    div.append(name, pidentificantion, agep, numberApointments, eadddateButton, deleteButton);
+    specialtyContainer.append(div);
+}
+function recreateSpecialy(notes) {
     notes.forEach(note => createReminder(note));
+}
+function recreatedates(date, div) {
+    const datep = document.createElement('p');
+    datep.className = `single-patient-date`;
+    datep.innerText = 'Date: ' + date;
+    div.append(datep);
 }
