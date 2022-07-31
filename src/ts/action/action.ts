@@ -22,6 +22,20 @@ export async function postSpecialty(specialty:specialtyI){
     return response;
   }
 
+  export async function putSpecialty(specialty:specialtyI){
+
+    const response:Response = await fetch('http://localhost:9090/api/v1/hospital/updatespecialty',
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(specialty)
+    })
+
+    return response;
+  }
+
 
 
   export async function postPatient(specialty:specialtyI){

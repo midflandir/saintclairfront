@@ -26,6 +26,18 @@ export function postSpecialty(specialty) {
         return response;
     });
 }
+export function putSpecialty(specialty) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield fetch('http://localhost:9090/api/v1/hospital/updatespecialty', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(specialty)
+        });
+        return response;
+    });
+}
 export function postPatient(specialty) {
     return __awaiter(this, void 0, void 0, function* () {
         const response = yield fetch('http://localhost:9090/api/v1/hospital/registerpatient', {

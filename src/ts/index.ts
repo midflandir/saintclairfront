@@ -1,4 +1,4 @@
-import { getAllSpecialtypatient, postSpecialty, deleteSpecialty, deletePatient, postPatient, putPatient} from "./action/action.js";
+import { getAllSpecialtypatient, postSpecialty, deleteSpecialty, deletePatient, postPatient, putPatient, putSpecialty} from "./action/action.js";
 import { specialtyI,patientI} from "./model/interface.js";
 const form: HTMLFormElement |null =
 document.querySelector('.specialties-form');
@@ -20,10 +20,6 @@ function handleSubmit(e:SubmitEvent){
 
   if(nameinput.value.length >= 5 && nameinput.value.length <=100
     && physicianInput.value.length >= 10 && physicianInput.value.length <= 45 ){
-
-    const date = new Date()
-    date.setHours(date.getHours() - 5)
-
 
 
     const newspecialty: specialtyI = {
@@ -62,7 +58,7 @@ function createSpecialty(specialty:specialtyI){
   h2.innerText = 'Specialty: ' + specialty.name
 
   const reminderP:HTMLParagraphElement = document.createElement('p')
-  reminderP.className = `single-specialty-reminder-${specialty.id}`
+  reminderP.className = `single-specialty-physician-${specialty.id}`
   reminderP.innerText = 'Physician In Charge: ' + specialty.physicianInCharge
 
   const deleteButton:HTMLButtonElement = document.createElement('button')
@@ -73,7 +69,8 @@ function createSpecialty(specialty:specialtyI){
   const editButton:HTMLButtonElement = document.createElement('button')
   editButton.className = 'single-specialty-edit-button'
   editButton.innerText = 'Edit Specialty'
-  //editButton.addEventListener('click', ()=> hanldeEditspecialty(specialty))
+  editButton.addEventListener('click', ()=> hanldeEditspecialty(specialty))
+
   const formpatient:HTMLFormElement = document.createElement('form');
   formpatient.className = `patientform-${specialty.id}`
 
@@ -93,6 +90,61 @@ function createSpecialty(specialty:specialtyI){
 }
 
 
+
+function hanldeEditspecialty(specialty:specialtyI){
+
+  const nameInput = document.querySelector('.name-input') as HTMLInputElement;
+  const physicianInput = document.querySelector('.physician-input') as HTMLInputElement;
+  const submitButton = document.querySelector('.specialties-form-button') as HTMLButtonElement
+  submitButton.classList.add('display_none')
+
+  const editButton:HTMLButtonElement = document.createElement('button')
+  editButton.className = 'form-edit-button'
+  editButton.innerText = 'Edit';
+  editButton.addEventListener('click', () => executeEdition(specialty, nameInput, physicianInput))
+
+  const formContainer = document.querySelector('.form-container');
+  formContainer?.append(editButton)
+
+  nameInput.value = specialty.name!;
+  physicianInput.value = specialty.physicianInCharge!;
+}
+
+function executeEdition(specialty:specialtyI, nameInput:HTMLInputElement, physician:HTMLInputElement){
+  if(nameInput.value.length >= 5 && nameInput.value.length <=100
+    && physician.value.length >= 10 && physician.value.length <= 45 ){
+  const specialtyEdited:specialtyI = {
+    id:specialty.id,
+    name:nameInput.value,
+    physicianInCharge:physician.value,
+    patients:[]
+  }
+  putSpecialty(specialtyEdited).then(response => {
+    if(response.status === 200){
+      /*const newState:specialtyI[] = state.map(specialty => specialty.id === specialtyEdited.id?specialtyEdited:specialty)
+      state = newState;
+
+      const h2Title = document.querySelector(`.single-specialty-name-${specialty.id}`) as HTMLHeadingElement
+      h2Title.innerText = 'Specialty: ' + specialtyEdited.name!
+      const pReminder = document.querySelector(`.single-specialty-physician-${specialty.id}`) as HTMLParagraphElement
+      pReminder.innerText = 'Physician In Charge: ' + specialtyEdited.physicianInCharge!
+
+      nameInput.value = ''
+      physician.value = ''
+      const submitButton = document.querySelector('.specialties-form-button') as HTMLButtonElement
+      submitButton.classList.remove('display_none')
+
+      const editButton = document.querySelector('.form-edit-button') as HTMLButtonElement
+
+      editButton.remove()
+
+      */window.location.reload();
+    }
+  })
+
+    }
+
+}
 function hanldeAddpatient(specialty:specialtyI, div:HTMLDivElement, formpatient:HTMLFormElement){
 
 
@@ -113,7 +165,7 @@ function hanldeAddpatient(specialty:specialtyI, div:HTMLDivElement, formpatient:
     inputIdnumber.placeholder = "Patient Identification Number"
 
     const submitButton:HTMLButtonElement = document.createElement('button');
-    submitButton.className = 'single-specialty-delete-button'
+    submitButton.className = 'single-add-patient-button'
     submitButton.innerText = 'Add'
     //submitButton.addEventListener('click', ()=> handlepatientSubmit(div))
 
