@@ -1,71 +1,75 @@
 .grid-container {
-    color: #293635;
-    min-height: 12rem;
-    border-radius: 2rem;
-    background-color: #80DED9;
-    padding: 30px;
-    margin: 20px;
-  }
-
-  .single-patient-container{
-    color: #defaf9;
-    box-sizing: border-box;
-    min-height: 12rem;
-    border-radius: 1rem;
-    background-color: #068D9D;
-    padding: 20px;
-    margin: 20px;
-  }
-.top-section-container{
-    background-image: url("../images/banner.jpg");
-    background-size: cover;
-    padding: 10px;
-    text-align: center;
-    width: 80%;
-    color: #293635;
-    margin: auto;
-    min-height: 12rem;
-    border-radius: 5rem;
-
-}
-.display_none{
-    display: none;
+  color: #293635;
+  min-height: 12rem;
+  border-radius: 2rem;
+  background-color: #80DED9;
+  padding: 30px;
+  margin: 20px;
 }
 
-p{
-    font-size: 1.2em
+.single-patient-container {
+  color: #defaf9;
+  box-sizing: border-box;
+  min-height: 12rem;
+  border-radius: 1rem;
+  background-color: #068D9D;
+  padding: 20px;
+  margin: 20px;
 }
-  body{
 
-    margin: auto;
-    text-align: center;
- color: #defaf9;
-    box-sizing: border-box;
-    min-height: 30vh;
-    border-radius: 1rem;
-background-color: #068D9D;
-
-
-  }
-button{
-    font-size: 1em;
-    padding: 5px;
-    margin: 10px;
-    color: #293635;
+.top-section-container {
+  background-image: url("../images/banner.jpg");
+  background-size: cover;
+  padding: 10px;
+  text-align: center;
+  width: 80%;
+  color: #293635;
+  margin: auto;
+  min-height: 12rem;
+  border-radius: 5rem;
 
 }
 
-input{
-    font-size: 1em;
-    padding: 5px;
-    margin: 10px;
-    color: #293635;
-    border-radius: 1rem;
+.display_none {
+  display: none;
 }
 
-  .medicalspecialtylist-container{
+p {
+  font-size: 1.2em
+}
 
-    margin: auto;
-    width: 55%;
+body {
 
-  }
+  margin: auto;
+  text-align: center;
+  color: #defaf9;
+  box-sizing: border-box;
+  min-height: 30vh;
+  border-radius: 1rem;
+  background-color: #068D9D;
+
+
+}
+
+button {
+  font-size: 1em;
+  padding: 5px;
+  margin: 10px;
+  color: #293635;
+
+}
+
+input {
+  font-size: 1em;
+  padding: 5px;
+  margin: 10px;
+  color: #293635;
+  border-radius: 1rem;
+}
+
+.medicalspecialtylist-container {
+
+  margin: auto;
+  width: 55%;
+
+}
