@@ -2,9 +2,7 @@
     color: #293635;
     min-height: 12rem;
     border-radius: 2rem;
-background-color: #80DED9;
-
-
+    background-color: #80DED9;
     padding: 30px;
     margin: 20px;
   }
@@ -14,10 +12,7 @@ background-color: #80DED9;
     box-sizing: border-box;
     min-height: 12rem;
     border-radius: 1rem;
-background-color: #068D9D;
-
-
-
+    background-color: #068D9D;
     padding: 20px;
     margin: 20px;
   }
@@ -26,7 +21,7 @@ background-color: #068D9D;
     background-size: cover;
     padding: 10px;
     text-align: center;
-    width: 70%;
+    width: 80%;
     color: #293635;
     margin: auto;
     min-height: 12rem;
@@ -71,6 +66,6 @@ input{
   .medicalspecialtylist-container{
 
     margin: auto;
-    width: 50%;
+    width: 55%;
 
   }

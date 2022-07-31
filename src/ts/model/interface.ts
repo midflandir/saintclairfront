@@ -2,17 +2,17 @@
 
   export interface specialtyI{
     id:number|null,
-    name:string,
-    physicianInCharge:string,
+    name:string|null,
+    physicianInCharge:string|null,
     patients:patientI[] | null
 
 }
 export interface patientI{
-      id:number,
+      id:number|null,
       name:string,
       age:string,
       identificationNumber:string,
-      date:string[],
-      numberOfApointments:number
+      date:string[]|null,
+      numberOfApointments:number|null
 
 }

@@ -23,6 +23,21 @@ export async function postSpecialty(specialty:specialtyI){
   }
 
 
+
+  export async function postPatient(specialty:specialtyI){
+
+    const response:Response = await fetch('http://localhost:9090/api/v1/hospital/registerpatient',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(specialty)
+    })
+
+    return response;
+  }
+
 export async function deleteSpecialty(id:string){
 
   const response:Response = await fetch(`http://localhost:9090/api/v1/hospital/deletespecialty/${id}`,
@@ -43,31 +58,18 @@ export async function deletePatient(id:string){
 
     return response;
   }
-/*
-export async function putNote(note:noteI){
-  const response:Response = await fetch('http://localhost:8081/api/v1/update/note',
-  {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(note)
-  })
 
-  return response;
-}*/
+  export async function putPatient(specialty:specialtyI){
 
-/*
-export async function postNote(note:noteI){
-  const response:Response = await fetch('http://localhost:8081/api/v1/save/note',
-  {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(note)
-  })
+    const response:Response = await fetch('http://localhost:9090/api/v1/hospital/adddatepatient',
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(specialty)
+    })
 
-  return response;
-}
-*/
+    return response;
+  }
+
